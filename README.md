@@ -1,4 +1,6 @@
-[![Model architecture](https://img.shields.io/badge/Model%20Arch-Transformer%20Decoder-green)](#model-architecture)|[![Model size](https://img.shields.io/badge/Params-5B-green)](#model-architecture)|[![Language](https://img.shields.io/badge/Language-en--US-lightgrey#model-badge)](#datasets)![AUR license](https://img.shields.io/badge/license-Apache%202-blue)
+[![Model architecture](https://img.shields.io/badge/Model%20Arch-Transformer%20Decoder-green)](#model-architecture)|
+[![Model size](https://img.shields.io/badge/Params-5B-green)](#model-architecture)|
+(#datasets)![AUR license](https://img.shields.io/badge/license-Apache%202-blue)
 
 
 # retrieval-augmented-generation
