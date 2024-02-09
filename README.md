@@ -9,6 +9,8 @@ To create the requirements.txt file for your Python project, run the following c
 
 ```bash
 poetry export --format requirements.txt --output requirements.txt
+pip3 freeze > requirements.txt
+ln -s "/Volumes/volume/huggingface" "/Users/user/.cache"
 ```
 
 To create the myenv.yaml file for your Conda environment, run the following command:
@@ -20,6 +22,7 @@ conda env export > myenv.yaml
 ## Installation
 1. Install Miniconda:
 Go to Miniconda and follow the installation instructions for Miniconda.
+https://docs.anaconda.com/free/miniconda/
 
 2. Check Existing Environments:
 Make sure there is no existing environment named environment by running the following command:
