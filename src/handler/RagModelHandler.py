@@ -1,3 +1,4 @@
+# import logging
 from transformers import RagTokenizer, RagRetriever, RagTokenForGeneration
 import os
 
@@ -15,21 +16,36 @@ class RAGModelHandler:
         """
         print("Loading model... This might take a while.")
         model_name = "facebook/rag-token-nq"
+        print("-" * 10 + "cache_dir" + "-" * 10, end="\n")
         cache_dir = os.path.expanduser("~/.cache/huggingface/transformers")
-        print("Loading model... This might take a while.")
+        # if not self.is_model_downloaded(cache_dir, model_name):
+        #     print("Do you want to install 40G of data?")
+        #     if(not (input() == 'y' or 'Y')):
+        #         return 0
+                
+        print("-" * 10 + "RagTokenizer" + "-" * 10, end="\n")
+        # logger.info("Step 1 - Create the dataset")
+        self.tokenizer = RagTokenizer.from_pretrained(model_name)
+        print("-" * 10 + "RagRetriever" + "-" * 10, end="\n")
+        self.retriever = RagRetriever.from_pretrained(model_name, index_name="exact", use_dummy_dataset=True)
+        print("-" * 10 + "RagTokenForGeneration" + "-" * 10, end="\n")
+        self.model = RagTokenForGeneration.from_pretrained(model_name, retriever=self.retriever)
 
-        if not self.is_model_downloaded(cache_dir, model_name):
-            print(f"Downloading model {model_name}...")
-            self.tokenizer = RagTokenizer.from_pretrained(model_name)
-            self.retriever = RagRetriever.from_pretrained(model_name, index_name="exact")
-            self.model = RagTokenForGeneration.from_pretrained(model_name, retriever=self.retriever)
-            print("Model downloaded and loaded successfully.")
-        else:
-            print(f"Model {model_name} already downloaded. Loading from cache...")
-            self.tokenizer = RagTokenizer.from_pretrained(model_name, local_files_only=True)
-            self.retriever = RagRetriever.from_pretrained(model_name, index_name="exact", local_files_only=True)
-            self.model = RagTokenForGeneration.from_pretrained(model_name, retriever=self.retriever, local_files_only=True)
-            print("Model loaded successfully from cache.")
+        # if not self.is_model_downloaded(cache_dir, model_name):
+        #     print(f"Downloading model {model_name}...")
+        #     print("-" * 10 + "RagTokenizer" + "-" * 10)
+        #     self.tokenizer = RagTokenizer.from_pretrained(model_name)
+        #     print("-" * 10 + "RagRetriever" + "-" * 10)
+        #     self.retriever = RagRetriever.from_pretrained(model_name, index_name="exact", use_dummy_dataset=True)
+        #     print("-" * 10 + "RagTokenForGeneration" + "-" * 10)
+        #     self.model = RagTokenForGeneration.from_pretrained(model_name, retriever=self.retriever)
+        #     print("Model downloaded and loaded successfully.")
+        # else:
+        #     print(f"Model {model_name} already downloaded. Loading from cache...")
+        #     self.tokenizer = RagTokenizer.from_pretrained(model_name, local_files_only=True)
+        #     self.retriever = RagRetriever.from_pretrained(model_name, index_name="exact", local_files_only=True)
+        #     self.model = RagTokenForGeneration.from_pretrained(model_name, retriever=self.retriever, local_files_only=True)
+        #     print("Model loaded successfully from cache.")
 
     def generate_response(self, query: str, max_length: int = 30):
         """
